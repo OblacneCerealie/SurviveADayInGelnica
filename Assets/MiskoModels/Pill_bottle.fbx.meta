@@ -3,7 +3,12 @@ guid: 62762761c5658b1498f026e96ac92a2f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Cylinder Base Color.001
+    second: {fileID: 2800000, guid: 6f49faeb310433a41993814af48dc9e8, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -114,8 +114,8 @@ public class LightingManager : MonoBehaviour
     
     void SetupInitialState()
     {
-        // Start with lights off for maximum darkness
-        lightsOn = false;
+        // Start with lights on
+        lightsOn = true;
         ApplyLightingState(true); // Immediate application
     }
     
