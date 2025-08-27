@@ -132,9 +132,24 @@ public class LightGenerator : MonoBehaviour
         bool wasInRange = playerInRange;
         playerInRange = distanceToPlayer <= interactionRange;
         
-        if (playerInRange && !wasInRange && showDebugInfo && CanActivate())
+        if (playerInRange && !wasInRange && showDebugInfo)
         {
-            Debug.Log($"Light generator nearby - Press {interactionKey} to turn on lights");
+            if (CanActivate())
+            {
+                string message = $"Light generator nearby - Press {interactionKey} to turn on lights";
+                
+                // Add additional context if sanity is low
+                if (SanityManager.Instance != null && !SanityManager.Instance.CanAutomaticallyRestoreLights())
+                {
+                    message += " (SANITY TOO LOW - Generator is the only way to restore power!)";
+                }
+                
+                Debug.Log(message);
+            }
+            else if (SanityManager.Instance != null && !SanityManager.Instance.CanUseGenerator())
+            {
+                Debug.Log("Light generator nearby - GENERATOR DISABLED: Sanity is at 0!");
+            }
         }
     }
     
@@ -165,6 +180,13 @@ public class LightGenerator : MonoBehaviour
         if (isActivating) return false;
         if (!allowMultipleUses && HasBeenActivated()) return false;
         if (isOnCooldown) return false;
+        
+        // Check if generator can work based on sanity level
+        if (SanityManager.Instance != null && !SanityManager.Instance.CanUseGenerator())
+        {
+            return false;
+        }
+        
         return true;
     }
     
@@ -279,10 +301,18 @@ public class LightGenerator : MonoBehaviour
         
         if (turnOnLightsWhenActivated)
         {
-            LightingManager.Instance.SetLights(true);
+            // Use ForceLightsOn to override sanity restrictions
+            LightingManager.Instance.ForceLightsOn();
+            
+            // Also update sanity manager to track that lights are on
+            if (SanityManager.Instance != null)
+            {
+                SanityManager.Instance.ForceLightsOn();
+            }
+            
             if (showDebugInfo)
             {
-                Debug.Log("LightGenerator: Turned ON lights via LightingManager");
+                Debug.Log("LightGenerator: FORCED lights ON (overriding sanity restrictions)");
             }
         }
         else

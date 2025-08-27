@@ -61,6 +61,8 @@ The system consists of several components that work together:
 ### Sanity System
 - Starts at 100 sanity
 - Decreases by 1 every 2 seconds automatically
+- **Draining stops when sanity reaches 0**
+- **Draining resumes automatically when sanity is restored above 0** (e.g., through pills)
 - Displays current sanity in UI as "Sanity: X/100"
 - Text color changes based on sanity level:
   - White: Above 75%
@@ -69,8 +71,9 @@ The system consists of several components that work together:
 
 ### Lighting Control
 - When sanity drops below 50, lights automatically turn off
-- When sanity goes back above 50, lights turn back on
-- Uses the existing LightingManager system
+- **NEW**: When sanity is below 50, lights can ONLY be restored using the Light Generator
+- When sanity goes back above 50, lights turn back on automatically
+- Uses the existing LightingManager system with enhanced sanity restrictions
 
 ## Configuration Options
 
@@ -129,8 +132,36 @@ The system provides debug information. You can:
 ## Integration with Existing Systems
 
 This system integrates with:
-- **LightingManager**: Controls lighting based on sanity
+- **LightingManager**: Controls lighting based on sanity with new force override capability
+- **LightGenerator**: Can override sanity restrictions to force lights on
 - **PatientNPC**: Extends navigation range
 - **PatientInteraction**: Existing patient interaction system remains functional
 
 The system is designed to work alongside existing game mechanics without conflicts.
+
+## New Light Generator Integration
+
+### Light Generator Override Feature
+- **Sanity 50-100**: Normal operation - switches work automatically
+- **Sanity 1-49**: Light switches disabled, only Light Generator can restore power
+- **After Generator Activation (Sanity 1-49)**: Lights stay on permanently, switches work normally again
+- **Sanity 0**: Complete power failure - even the Light Generator is disabled
+- Provides layered gameplay progression based on sanity levels
+
+### Testing the Integration
+Use these context menu options on the respective components:
+
+**SanityManager**:
+- "Test: Set Sanity to 30 (Below Threshold)" - Forces low sanity to test restrictions
+- "Test: Set Sanity to 60 (Above Threshold)" - Restores normal sanity
+- "Test: Simulate Generator at Sanity 30" - Tests generator activation at low sanity
+- "Test: Simulate Generator at Sanity 0" - Tests generator failure at zero sanity
+- "Test: Check Switch Status" - Shows current system state and capabilities
+- "Test: Sanity Recovery from Zero" - Tests sanity draining resumption after restoration
+
+**LightingManager**:
+- "Test: Try Normal Light Activation (Respects Sanity)" - Tests normal restrictions
+- "Test: Force Light Activation (Ignores Sanity)" - Tests force override
+
+**LightGenerator**:
+- "Reset Generator" - Resets generator state for testing

@@ -4,6 +4,7 @@ public class PlayerInventory : MonoBehaviour
 {
     [Header("Inventory")]
     public bool hasPills = false;
+    public bool hasFlashlight = false;
     
     [Header("Debug")]
     public bool showDebugInfo = true;
@@ -42,9 +43,38 @@ public class PlayerInventory : MonoBehaviour
         return hasPills;
     }
     
+    // Add flashlight to inventory
+    public void AddFlashlight()
+    {
+        hasFlashlight = true;
+        if (showDebugInfo)
+        {
+            Debug.Log("Flashlight added to inventory");
+        }
+    }
+    
+    // Remove flashlight from inventory
+    public void RemoveFlashlight()
+    {
+        hasFlashlight = false;
+        if (showDebugInfo)
+        {
+            Debug.Log("Flashlight removed from inventory");
+        }
+    }
+    
+    // Check if player has flashlight
+    public bool HasFlashlight()
+    {
+        return hasFlashlight;
+    }
+    
     // Get inventory status for UI
     public string GetInventoryStatus()
     {
-        return hasPills ? "Has Pills" : "No Pills";
+        string status = "";
+        if (hasPills) status += "Pills ";
+        if (hasFlashlight) status += "Flashlight ";
+        return status.Length > 0 ? status.Trim() : "Empty";
     }
 }

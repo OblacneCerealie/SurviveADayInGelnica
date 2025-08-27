@@ -164,27 +164,55 @@ public class LightingManager : MonoBehaviour
     
     public void ToggleLights()
     {
-        lightsOn = !lightsOn;
-        ApplyLightingState(false);
+        bool targetState = !lightsOn;
+        
+        // Use SetLights to respect sanity restrictions
+        SetLights(targetState, false);
         
         if (showDebugInfo)
         {
-            Debug.Log($"Lights toggled: {(lightsOn ? "ON" : "OFF")}");
+            Debug.Log($"Lights toggle attempted: {(targetState ? "ON" : "OFF")} -> Result: {(lightsOn ? "ON" : "OFF")}");
         }
     }
     
     public void SetLights(bool state)
     {
+        SetLights(state, false);
+    }
+    
+    public void SetLights(bool state, bool forceOverride = false)
+    {
         if (lightsOn != state)
         {
+            // Check if we can turn lights on based on sanity level
+            if (state && !forceOverride && !CanTurnOnLights())
+            {
+                if (showDebugInfo)
+                {
+                    Debug.Log("LightingManager: Cannot turn on lights - sanity too low. Only light generator can override.");
+                }
+                return;
+            }
+            
             lightsOn = state;
             ApplyLightingState(false);
             
             if (showDebugInfo)
             {
-                Debug.Log($"Lights set to: {(lightsOn ? "ON" : "OFF")}");
+                string method = forceOverride ? "FORCED" : "NORMAL";
+                Debug.Log($"Lights set to: {(lightsOn ? "ON" : "OFF")} ({method})");
             }
         }
+    }
+    
+    private bool CanTurnOnLights()
+    {
+        // Check with SanityManager if lights can be automatically restored
+        if (SanityManager.Instance != null)
+        {
+            return SanityManager.Instance.CanAutomaticallyRestoreLights();
+        }
+        return true; // Default to allowing lights if no sanity manager
     }
     
     void ApplyLightingState(bool immediate = false)
@@ -248,6 +276,17 @@ public class LightingManager : MonoBehaviour
     public bool AreLightsOn => lightsOn;
     public bool IsTransitioning => isTransitioning;
     
+    // Method for light generator to force lights on regardless of sanity
+    public void ForceLightsOn()
+    {
+        SetLights(true, true);
+        
+        if (showDebugInfo)
+        {
+            Debug.Log("LightingManager: Lights forced ON by light generator (ignoring sanity level)");
+        }
+    }
+    
     // Method to add lights to control
     public void RegisterLight(Light lightToAdd)
     {
@@ -281,4 +320,19 @@ public class LightingManager : MonoBehaviour
     {
         ToggleLights();
     }
+    
+    [ContextMenu("Test: Try Normal Light Activation (Respects Sanity)")]
+    public void TestNormalLightActivation()
+    {
+        Debug.Log($"TEST: Attempting normal light activation. Can turn on lights: {CanTurnOnLights()}");
+        SetLights(true, false);
+    }
+    
+    [ContextMenu("Test: Force Light Activation (Ignores Sanity)")]
+    public void TestForceLightActivation()
+    {
+        Debug.Log("TEST: Forcing lights on (ignoring sanity restrictions)");
+        ForceLightsOn();
+    }
 }
+

@@ -147,7 +147,30 @@ public class LightSwitch : MonoBehaviour
         
         if (playerInRange && !wasInRange && showDebugInfo)
         {
-            Debug.Log($"Light switch nearby - Press {interactionKey} to toggle lights");
+            string message = $"Light switch nearby - Press {interactionKey} to toggle lights";
+            
+            // Add warning based on sanity and generator state
+            if (SanityManager.Instance != null)
+            {
+                if (!SanityManager.Instance.CanUseLightSwitches() && 
+                    (LightingManager.Instance == null || !LightingManager.Instance.AreLightsOn))
+                {
+                    if (SanityManager.Instance.GetCurrentSanity() == 0)
+                    {
+                        message += " (WARNING: Sanity at 0 - nothing works!)";
+                    }
+                    else
+                    {
+                        message += " (WARNING: Sanity too low - use Light Generator first!)";
+                    }
+                }
+                else if (SanityManager.Instance.CanUseLightSwitches() && !SanityManager.Instance.CanAutomaticallyRestoreLights())
+                {
+                    message += " (Generator activated - switch works normally)";
+                }
+            }
+            
+            Debug.Log(message);
         }
     }
     
@@ -167,6 +190,23 @@ public class LightSwitch : MonoBehaviour
         if (LightingManager.Instance == null)
         {
             Debug.LogError("LightSwitch: No LightingManager found in scene!");
+            return;
+        }
+        
+        // Check if we can use the switch based on sanity level and generator override
+        if (SanityManager.Instance != null && !SanityManager.Instance.CanUseLightSwitches() && !LightingManager.Instance.AreLightsOn)
+        {
+            if (showDebugInfo)
+            {
+                if (SanityManager.Instance.GetCurrentSanity() == 0)
+                {
+                    Debug.Log("LightSwitch: Cannot turn on lights - sanity is at 0! Nothing works!");
+                }
+                else
+                {
+                    Debug.Log("LightSwitch: Cannot turn on lights - sanity too low! Use the Light Generator first.");
+                }
+            }
             return;
         }
         
