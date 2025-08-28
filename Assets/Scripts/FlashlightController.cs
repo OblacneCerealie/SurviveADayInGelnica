@@ -33,7 +33,7 @@ public class FlashlightController : MonoBehaviour
         playerInventory = FindFirstObjectByType<PlayerInventory>();
         if (playerInventory == null)
         {
-            Debug.LogError("FlashlightController: No PlayerInventory found in scene!");
+
         }
         
         // Find attach point if not assigned (usually the camera)
@@ -45,12 +45,12 @@ public class FlashlightController : MonoBehaviour
                 flashlightAttachPoint = playerCamera.transform;
                 if (showDebugInfo)
                 {
-                    Debug.Log("FlashlightController: Using main camera as attach point");
+
                 }
             }
             else
             {
-                Debug.LogWarning("FlashlightController: No attach point assigned and no main camera found!");
+
             }
         }
         
@@ -131,7 +131,7 @@ public class FlashlightController : MonoBehaviour
         {
             if (showDebugInfo)
             {
-                Debug.Log("FlashlightController: No flashlight in inventory!");
+
             }
             return;
         }
@@ -140,7 +140,7 @@ public class FlashlightController : MonoBehaviour
         {
             if (showDebugInfo)
             {
-                Debug.Log("FlashlightController: No flashlight light component assigned!");
+
             }
             return;
         }
@@ -152,7 +152,7 @@ public class FlashlightController : MonoBehaviour
             {
                 if (showDebugInfo)
                 {
-                    Debug.Log("FlashlightController: Cannot turn on - battery depleted!");
+
                 }
                 return;
             }
@@ -163,7 +163,7 @@ public class FlashlightController : MonoBehaviour
         
         if (showDebugInfo)
         {
-            Debug.Log($"Flashlight turned {(isFlashlightOn ? "ON" : "OFF")}");
+
         }
     }
     
@@ -218,7 +218,7 @@ public class FlashlightController : MonoBehaviour
             
             if (showDebugInfo)
             {
-                Debug.Log("FlashlightController: Attached flashlight light to player");
+
             }
         }
         
@@ -261,7 +261,7 @@ public class FlashlightController : MonoBehaviour
             
             if (showDebugInfo)
             {
-                Debug.Log("FlashlightController: Flashlight removed");
+
             }
         }
     }

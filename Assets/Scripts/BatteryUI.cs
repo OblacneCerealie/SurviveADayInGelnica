@@ -31,7 +31,7 @@ public class BatteryUI : MonoBehaviour
     
     void Awake()
     {
-        Debug.Log("BatteryUI: Awake() called!");
+
         InitializeBatteryUI();
         SetupEventListeners();
     }
@@ -47,7 +47,7 @@ public class BatteryUI : MonoBehaviour
         playerInventory = FindFirstObjectByType<PlayerInventory>();
         if (playerInventory == null)
         {
-            Debug.LogError("BatteryUI: No PlayerInventory found in scene! Make sure your player has the PlayerInventory script.");
+
             
             // Try to find by player tag as backup
             GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -56,18 +56,18 @@ public class BatteryUI : MonoBehaviour
                 playerInventory = player.GetComponent<PlayerInventory>();
                 if (playerInventory != null)
                 {
-                    Debug.Log("BatteryUI: Found PlayerInventory on Player-tagged GameObject");
+
                 }
                 else
                 {
-                    Debug.LogError("BatteryUI: Player GameObject found but no PlayerInventory script attached!");
+
                 }
             }
         }
         else
         {
-            Debug.Log($"BatteryUI: PlayerInventory found successfully on {playerInventory.gameObject.name}");
-            Debug.Log($"BatteryUI: Initial flashlight status: {playerInventory.HasFlashlight()}");
+
+
         }
         
         // Auto-find UI components if not assigned
@@ -107,7 +107,7 @@ public class BatteryUI : MonoBehaviour
         
         if (showDebugInfo)
         {
-            Debug.Log("BatteryUI initialized");
+
         }
     }
     
@@ -129,7 +129,7 @@ public class BatteryUI : MonoBehaviour
     {
         if (playerInventory == null)
         {
-            Debug.LogWarning("BatteryUI: PlayerInventory is null - trying to find it again");
+
             playerInventory = FindFirstObjectByType<PlayerInventory>();
             return;
         }
@@ -145,7 +145,7 @@ public class BatteryUI : MonoBehaviour
             
             if (showDebugInfo)
             {
-                Debug.Log($"BatteryUI: Flashlight equipped status changed: {hasFlashlight}");
+
             }
             
             // When flashlight is first equipped, update the display immediately
@@ -156,7 +156,7 @@ public class BatteryUI : MonoBehaviour
                 UpdateBatteryDisplay(current, max);
                 if (showDebugInfo)
                 {
-                    Debug.Log($"BatteryUI: Initial battery display updated - {current}%");
+
                 }
             }
         }
@@ -197,7 +197,7 @@ public class BatteryUI : MonoBehaviour
         
         if (showDebugInfo)
         {
-            Debug.Log("BatteryUI: Battery depleted - starting warning effects");
+
         }
     }
     
@@ -207,7 +207,7 @@ public class BatteryUI : MonoBehaviour
         
         if (showDebugInfo)
         {
-            Debug.Log("BatteryUI: Battery restored - stopping warning effects");
+
         }
     }
     

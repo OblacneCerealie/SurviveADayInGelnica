@@ -49,7 +49,7 @@ public class PlayerInventory : MonoBehaviour
         hasFlashlight = true;
         if (showDebugInfo)
         {
-            Debug.Log("Flashlight added to inventory");
+
         }
     }
     
@@ -59,7 +59,7 @@ public class PlayerInventory : MonoBehaviour
         hasFlashlight = false;
         if (showDebugInfo)
         {
-            Debug.Log("Flashlight removed from inventory");
+
         }
     }
     

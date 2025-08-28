@@ -24,6 +24,8 @@ public class SanityManager : MonoBehaviour
     public static System.Action<int> OnSanityChanged;
     public static System.Action OnSanityBelowThreshold;
     public static System.Action OnSanityAboveThreshold;
+    public static System.Action OnSanityReachedZero;
+    public static System.Action OnSanityRestoredFromZero;
     
     // Private variables
     private bool lightsCurrentlyOff = false;
@@ -122,6 +124,16 @@ public class SanityManager : MonoBehaviour
             OnSanityChanged?.Invoke(currentSanity);
             UpdateSanityDisplay();
             CheckLightingThreshold();
+            
+            // Trigger special event when sanity reaches 0
+            if (oldSanity > 0 && currentSanity == 0)
+            {
+                OnSanityReachedZero?.Invoke();
+                if (showDebugInfo)
+                {
+                    Debug.Log("SanityManager: Sanity reached 0 - Monster should activate, patients should freeze");
+                }
+            }
         }
     }
     
@@ -139,10 +151,11 @@ public class SanityManager : MonoBehaviour
             // If sanity was at 0 and is now above 0, restart the draining routine
             if (oldSanity == 0 && currentSanity > 0)
             {
+                OnSanityRestoredFromZero?.Invoke();
                 StartSanityDecrease();
                 if (showDebugInfo)
                 {
-                    Debug.Log("SanityManager: Sanity restored above 0 - resuming sanity decrease");
+                    Debug.Log("SanityManager: Sanity restored above 0 - Monster should deactivate, patients should unfreeze, resuming sanity decrease");
                 }
             }
         }
@@ -267,13 +280,22 @@ public class SanityManager : MonoBehaviour
             UpdateSanityDisplay();
             CheckLightingThreshold();
             
-            // If sanity was at 0 and is now above 0, restart the draining routine
-            if (oldSanity == 0 && currentSanity > 0)
+            // Trigger special events for sanity reaching/leaving 0
+            if (oldSanity > 0 && currentSanity == 0)
             {
+                OnSanityReachedZero?.Invoke();
+                if (showDebugInfo)
+                {
+                    Debug.Log("SanityManager: Sanity reached 0 - Monster should activate, patients should freeze");
+                }
+            }
+            else if (oldSanity == 0 && currentSanity > 0)
+            {
+                OnSanityRestoredFromZero?.Invoke();
                 StartSanityDecrease();
                 if (showDebugInfo)
                 {
-                    Debug.Log("SanityManager: Sanity restored above 0 - resuming sanity decrease");
+                    Debug.Log("SanityManager: Sanity restored above 0 - Monster should deactivate, patients should unfreeze, resuming sanity decrease");
                 }
             }
         }
@@ -365,6 +387,13 @@ public class SanityManager : MonoBehaviour
         
         // Wait a moment then restore sanity
         Invoke(nameof(RestoreSanityAfterDelay), 2f);
+    }
+    
+    [ContextMenu("Test: Force Sanity to 0")]
+    public void TestForceSanityToZero()
+    {
+        SetSanity(0);
+        Debug.Log("TEST: Forced sanity to 0 - Monster should activate, patients should freeze");
     }
     
     private void RestoreSanityAfterDelay()

@@ -34,12 +34,12 @@ public class FlashlightPickup : MonoBehaviour
                 playerTransform = player.transform;
                 if (showDebugInfo)
                 {
-                    Debug.Log("FlashlightPickup: Automatically found player with 'Player' tag");
+
                 }
             }
             else
             {
-                Debug.LogError("FlashlightPickup: No player found! Please assign playerTransform or tag your player with 'Player'");
+
             }
         }
         
@@ -55,7 +55,7 @@ public class FlashlightPickup : MonoBehaviour
             flashlightLight = GetComponentInChildren<Light>();
             if (flashlightLight == null)
             {
-                Debug.LogWarning("FlashlightPickup: No Light component found! Please assign or add a Light component.");
+
             }
         }
         
@@ -73,7 +73,7 @@ public class FlashlightPickup : MonoBehaviour
             boxCol.isTrigger = false;
             if (showDebugInfo)
             {
-                Debug.Log("FlashlightPickup: Added BoxCollider component");
+
             }
         }
     }
@@ -96,7 +96,7 @@ public class FlashlightPickup : MonoBehaviour
         
         if (playerInRange && !wasInRange && showDebugInfo)
         {
-            Debug.Log($"Flashlight nearby - Press {interactionKey} to pick up");
+
         }
     }
     
@@ -129,7 +129,7 @@ public class FlashlightPickup : MonoBehaviour
         }
         else
         {
-            Debug.LogError("FlashlightPickup: No PlayerInventory found in scene!");
+
         }
         
         // Hide the visual object but don't destroy it yet (light component might be needed)
@@ -140,7 +140,7 @@ public class FlashlightPickup : MonoBehaviour
         
         if (showDebugInfo)
         {
-            Debug.Log("Flashlight picked up! Press F to toggle light.");
+
         }
         
         // Destroy this pickup object after a short delay

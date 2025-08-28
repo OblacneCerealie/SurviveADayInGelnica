@@ -61,7 +61,7 @@ public class FlashlightBattery : MonoBehaviour
         
         if (showDebugInfo)
         {
-            Debug.Log($"FlashlightBattery initialized. Battery: {currentBattery}/{maxBattery}");
+
         }
         
         // Delay the initial UI notification to ensure UI is ready
@@ -75,7 +75,7 @@ public class FlashlightBattery : MonoBehaviour
         
         if (showDebugInfo)
         {
-            Debug.Log($"FlashlightBattery: Sent initial battery state - {currentBattery}%");
+
         }
     }
     
@@ -112,7 +112,7 @@ public class FlashlightBattery : MonoBehaviour
         {
             if (showDebugInfo)
             {
-                Debug.Log("FlashlightBattery: Flashlight equipped - battery system active");
+
             }
         }
         else
@@ -121,7 +121,7 @@ public class FlashlightBattery : MonoBehaviour
             StopBatteryDrain();
             if (showDebugInfo)
             {
-                Debug.Log("FlashlightBattery: Flashlight unequipped - battery system inactive");
+
             }
         }
     }
@@ -143,7 +143,7 @@ public class FlashlightBattery : MonoBehaviour
                 
                 if (showDebugInfo)
                 {
-                    Debug.Log("FlashlightBattery: Cannot turn on - battery depleted!");
+
                 }
                 return;
             }
@@ -153,7 +153,7 @@ public class FlashlightBattery : MonoBehaviour
             
             if (showDebugInfo)
             {
-                Debug.Log("FlashlightBattery: Flashlight ON - battery draining");
+
             }
         }
         else
@@ -163,7 +163,7 @@ public class FlashlightBattery : MonoBehaviour
             
             if (showDebugInfo)
             {
-                Debug.Log("FlashlightBattery: Flashlight OFF - battery drain stopped");
+
             }
         }
     }
@@ -215,7 +215,7 @@ public class FlashlightBattery : MonoBehaviour
             
             if (showDebugInfo)
             {
-                Debug.Log($"FlashlightBattery: Battery drained to {currentBattery:F1}%");
+
             }
         }
     }
@@ -232,7 +232,7 @@ public class FlashlightBattery : MonoBehaviour
         
         if (showDebugInfo)
         {
-            Debug.Log("FlashlightBattery: Battery depleted! Flashlight disabled.");
+
         }
     }
     
@@ -253,7 +253,7 @@ public class FlashlightBattery : MonoBehaviour
             
             if (showDebugInfo)
             {
-                Debug.Log($"FlashlightBattery: Battery recharged by {amount}%. Current: {currentBattery:F1}%");
+
             }
         }
     }
@@ -306,27 +306,27 @@ public class FlashlightBattery : MonoBehaviour
     public void TestSetBatteryLow()
     {
         SetBattery(10f);
-        Debug.Log("TEST: Battery set to 10%");
+
     }
     
     [ContextMenu("Test: Deplete Battery")]
     public void TestDepleteBattery()
     {
         SetBattery(0f);
-        Debug.Log("TEST: Battery depleted");
+
     }
     
     [ContextMenu("Test: Recharge Battery")]
     public void TestRechargeBattery()
     {
         UseBatteryPickup();
-        Debug.Log("TEST: Battery pickup used (+25%)");
+
     }
     
     [ContextMenu("Test: Full Battery")]
     public void TestFullBattery()
     {
         ResetBattery();
-        Debug.Log("TEST: Battery reset to 100%");
+
     }
 }

@@ -12,17 +12,17 @@ public class BatteryUIForceTest : MonoBehaviour
     
     void Start()
     {
-        Debug.Log("BatteryUIForceTest: Starting!");
+
         
         // Find player inventory
         playerInventory = FindFirstObjectByType<PlayerInventory>();
         if (playerInventory != null)
         {
-            Debug.Log($"BatteryUIForceTest: Found PlayerInventory on {playerInventory.gameObject.name}");
+
         }
         else
         {
-            Debug.LogError("BatteryUIForceTest: No PlayerInventory found!");
+
         }
         
         // Hide panel content initially but keep panel active so Update() runs
@@ -32,7 +32,7 @@ public class BatteryUIForceTest : MonoBehaviour
             batteryPanel.SetActive(true);
             if (batteryText != null) batteryText.gameObject.SetActive(false);
             if (batterySlider != null) batterySlider.gameObject.SetActive(false);
-            Debug.Log("BatteryUIForceTest: Panel content hidden initially, but panel stays active");
+
         }
         
         // Setup slider
@@ -52,7 +52,7 @@ public class BatteryUIForceTest : MonoBehaviour
             // Debug every few seconds to see what's happening
             if (Time.frameCount % 180 == 0) // Every 3 seconds at 60fps
             {
-                Debug.Log($"BatteryUIForceTest: Has flashlight: {hasFlashlight}, Panel active: {(batteryPanel != null ? batteryPanel.activeSelf : false)}");
+
             }
             
             if (hasFlashlight)
@@ -61,12 +61,12 @@ public class BatteryUIForceTest : MonoBehaviour
                 if (batteryText != null && !batteryText.gameObject.activeSelf)
                 {
                     batteryText.gameObject.SetActive(true);
-                    Debug.Log("BatteryUIForceTest: Battery text shown - flashlight equipped!");
+
                 }
                 if (batterySlider != null && !batterySlider.gameObject.activeSelf)
                 {
                     batterySlider.gameObject.SetActive(true);
-                    Debug.Log("BatteryUIForceTest: Battery slider shown - flashlight equipped!");
+
                 }
             }
             else
@@ -75,12 +75,12 @@ public class BatteryUIForceTest : MonoBehaviour
                 if (batteryText != null && batteryText.gameObject.activeSelf)
                 {
                     batteryText.gameObject.SetActive(false);
-                    Debug.Log("BatteryUIForceTest: Battery text hidden - flashlight removed!");
+
                 }
                 if (batterySlider != null && batterySlider.gameObject.activeSelf)
                 {
                     batterySlider.gameObject.SetActive(false);
-                    Debug.Log("BatteryUIForceTest: Battery slider hidden - flashlight removed!");
+
                 }
             }
             

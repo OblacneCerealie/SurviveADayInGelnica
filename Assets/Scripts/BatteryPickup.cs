@@ -45,12 +45,12 @@ public class BatteryPickup : MonoBehaviour
                 playerTransform = player.transform;
                 if (showDebugInfo)
                 {
-                    Debug.Log("BatteryPickup: Automatically found player with 'Player' tag");
+
                 }
             }
             else
             {
-                Debug.LogError("BatteryPickup: No player found! Please assign playerTransform or tag your player with 'Player'");
+
             }
         }
         
@@ -84,7 +84,7 @@ public class BatteryPickup : MonoBehaviour
             boxCol.isTrigger = false;
             if (showDebugInfo)
             {
-                Debug.Log("BatteryPickup: Added BoxCollider component");
+
             }
         }
         
@@ -120,7 +120,7 @@ public class BatteryPickup : MonoBehaviour
         
         if (playerInRange && !wasInRange && showDebugInfo)
         {
-            Debug.Log($"Battery nearby - Press {interactionKey} to pick up (+{batteryRecharge}% flashlight battery)");
+
         }
     }
     
@@ -140,7 +140,7 @@ public class BatteryPickup : MonoBehaviour
         
         if (showDebugInfo)
         {
-            Debug.Log("BatteryPickup: Attempting to pickup battery...");
+
         }
         
         // Check if player has flashlight
@@ -149,7 +149,7 @@ public class BatteryPickup : MonoBehaviour
         {
             if (showDebugInfo)
             {
-                Debug.LogError("BatteryPickup: No PlayerInventory found!");
+
             }
             return;
         }
@@ -158,7 +158,7 @@ public class BatteryPickup : MonoBehaviour
         {
             if (showDebugInfo)
             {
-                Debug.Log("BatteryPickup: You need a flashlight first!");
+
             }
             return;
         }
@@ -166,13 +166,13 @@ public class BatteryPickup : MonoBehaviour
         // Check if flashlight battery system exists
         if (FlashlightBattery.Instance == null)
         {
-            Debug.LogError("BatteryPickup: No FlashlightBattery system found in scene!");
+
             return;
         }
         
         if (showDebugInfo)
         {
-            Debug.Log("BatteryPickup: All checks passed, applying battery...");
+
         }
         
         // Check if battery is already full
@@ -180,7 +180,7 @@ public class BatteryPickup : MonoBehaviour
         {
             if (showDebugInfo)
             {
-                Debug.Log("BatteryPickup: Flashlight battery is already full!");
+
             }
             return;
         }
@@ -204,7 +204,7 @@ public class BatteryPickup : MonoBehaviour
         
         if (showDebugInfo)
         {
-            Debug.Log($"Battery picked up! Recharged flashlight by {batteryRecharge}%");
+
         }
         
         // Destroy this pickup object after effects
@@ -275,6 +275,6 @@ public class BatteryPickup : MonoBehaviour
     public void TestSetHighRecharge()
     {
         SetBatteryRecharge(50f);
-        Debug.Log("Battery recharge set to 50%");
+
     }
 }
