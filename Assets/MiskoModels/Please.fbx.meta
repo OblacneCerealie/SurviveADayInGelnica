@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 62762761c5658b1498f026e96ac92a2f
+guid: d0adbd96459c00848b7bb38a015f4f61
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Cylinder Base Color.001
-    second: {fileID: 2800000, guid: 2f98bf725b258cf4e98ff042102bb329, type: 3}
+      name: textured.fbm
+    second: {fileID: 2800000, guid: 7173c60fee814d445883bfa5ce12896a, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
